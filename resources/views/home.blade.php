@@ -120,13 +120,8 @@
         </ul>
         <i class="bi bi-list mobile-nav-toggle d-none"></i>
       </nav><!-- .navbar -->
-      
 
-      @if (Session::has('user'))
-          <a href="{{ route('logout') }}" class="get-started-btn scrollto">Logout</a>
-      @else
-          <a href="{{ route('login.page') }}" class="get-started-btn scrollto">Login</a>
-      @endif
+      <a href="#" class="btn btn-success btn-sm">Contact Us</a>
 
     </div>
   </header><!-- End Header -->
