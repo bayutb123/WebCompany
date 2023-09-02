@@ -162,7 +162,7 @@
                   </div>
 
                   <h2 class="title">
-                    <a href="blog-details.html">{{ $blog->title }}</a>
+                    <a href="{{ route('blog.single', ['id' => $blog->id]) }}">{{ $blog->title }}</a>
                   </h2>
 
                   <div class="meta-top">
@@ -349,6 +349,7 @@
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <div id="preloader"></div>
+  
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

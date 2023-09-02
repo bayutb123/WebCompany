@@ -22,17 +22,18 @@ class ComposeController extends Controller
         $filename = date('Y-m-d').$photo->getClientOriginalName();
         $path = 'blog-banner/'.$filename;
 
-        
-        Storage::disk('public')->put($path, file_get_contents($photo));
+        $user = auth()->user();
 
+        Storage::disk('public')->put($path, file_get_contents($photo));
 
         $blog = new Blog();
         $blog->title = $validated['title'];
-        $blog->author = $validated['author'];
+        $blog->author = $user->id;
         $blog->content = $validated['content'];
         $blog->image = $filename;
         $blog->save();
 
         return redirect()->route('dashboard.page');
     }
+
 }
