@@ -11,7 +11,7 @@
 
     <title>SB Admin 2 - Register</title>
 
-    @include('dependencies.link')
+    @include('dependencies-dashboard.link')
 
 </head>
 
@@ -70,7 +70,7 @@
 
     </div>
 
-    @include('dependencies.script')
+    @include('dependencies-dashboard.script')
 
 </body>
 

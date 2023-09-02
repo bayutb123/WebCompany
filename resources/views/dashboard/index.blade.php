@@ -11,7 +11,7 @@
 
     <title>Dashboard | {{ $user->name }}</title>
 
-    @include('dependencies.link')
+    @include('dependencies-dashboard.link')
 
 </head>
 
@@ -124,7 +124,7 @@
         </div>
     </div>
 
-    @include('dependencies.script')
+    @include('dependencies-dashboard.script')
 </body>
 
 </html>

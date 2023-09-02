@@ -11,7 +11,7 @@
 
     <title>Login</title>
 
-    @include('dependencies.link')
+    @include('dependencies-dashboard.link')
 
 </head>
 
@@ -73,7 +73,7 @@
     </div>
 
 
-    @include('dependencies.script')
+    @include('dependencies-dashboard.script')
 
 </body>
 
