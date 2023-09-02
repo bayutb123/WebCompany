@@ -9,3 +9,10 @@
 
 <!-- Custom styles for this template-->
 <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+
+<style>
+img {
+    max-width:100%;
+    height:auto;
+}
+</style>
