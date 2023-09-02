@@ -21,8 +21,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::group(['middleware' => 'guest'], function() {
         Route::get('/login', 'LoginController@index')->name('login.page');
         Route::post('/login', 'LoginController@login')->name('login.perform');
-        Route::get('/register', 'RegisterController@index')->name('register.page');
-        Route::post('/register', 'RegisterController@register')->name('register.perform');
     });
 
     Route::group(['middleware' => 'auth'], function() {
@@ -30,5 +28,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard.page');
         Route::get('/compose', 'ComposeController@index')->name('compose.page');
         Route::post('/compose', 'ComposeController@store')->name('compose.perform');
+        Route::get('/register', 'RegisterController@index')->name('register.page');
+        Route::post('/register', 'RegisterController@register')->name('register.perform');
     });
 });

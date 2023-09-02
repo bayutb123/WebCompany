@@ -11,7 +11,8 @@ class ComposeController extends Controller
 {
     public function index()
     {
-        return view('dashboard.compose');
+        $user = auth()->user();
+        return view('dashboard.compose')->with('user', $user);
     }
 
     public function store(ComposeRequest $request)
