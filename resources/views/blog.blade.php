@@ -158,7 +158,7 @@
                 <article class="d-flex flex-column">
 
                   <div class="post-img">
-                    <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+                    <img src="{{ asset('storage/blog-banner/'.$blog->image) }}" alt="" class="img-fluid">
                   </div>
 
                   <h2 class="title">
@@ -223,7 +223,7 @@
                       
 
                   <div class="post-item">
-                    <img src="assets/img/blog/blog-recent-5.jpg" alt="" class="flex-shrink-0">
+                    <img src="{{ asset('storage/blog-banner/'.$recentblog->image) }}" alt="" class="flex-shrink-0">
                     <div>
                       <h4><a href="blog-post.html">{{ $recentblog->title }}</a></h4>
                       <time datetime="2020-01-01">{{ $recentblog->created_at }}</time>

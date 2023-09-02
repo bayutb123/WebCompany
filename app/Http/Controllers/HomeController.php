@@ -8,7 +8,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $title = 'WebCompany';
+        return view('home')->with('title', $title);
     }
 
     public function blog()
