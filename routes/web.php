@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'App\Http\Controllers'], function()
 {
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index')->name('home.page');
     Route::get('/blog', 'BlogController@index')->name('blog.page');
     Route::get('/blog/{id}', 'BlogController@show')->name('blog.single');
     Route::group(['middleware' => 'guest'], function() {
