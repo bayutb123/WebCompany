@@ -336,18 +336,21 @@
 
                         <div class="col-lg-6 mb-4">
 
-                            <!-- Illustrations -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Latest blog post</h6>
-                                </div>
-                                <div class="card-body">
-                                    
-                                    <p>Welcome to TinyMCE!</p>
-                                    <a rel="nofollow" href="#">Browse all blog posts &rarr;</a>
-                                </div>
-                            </div>
+                            @foreach ($latestblogs as $blog)
+                                <!-- Illustrations -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">{{ $blog->title }}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        
+                                        {!! $blog->content  !!}
 
+                                    </div>
+                                </div>
+
+                            
+                            @endforeach
                             
                         </div>
                     </div>

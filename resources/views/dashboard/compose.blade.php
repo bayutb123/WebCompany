@@ -24,6 +24,49 @@
 
 </head>
 
+
+<script>
+    const image_upload_handler_callback = (blobInfo, progress) => new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+    xhr.open('POST', 'upload.php');
+    
+    xhr.upload.onprogress = (e) => {
+        progress(e.loaded / e.total * 100);
+    };
+    
+    xhr.onload = () => {
+        if (xhr.status === 403) {
+            reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+            return;
+        }
+      
+        if (xhr.status < 200 || xhr.status >= 300) {
+            reject('HTTP Error: ' + xhr.status);
+            return;
+        }
+      
+        const json = JSON.parse(xhr.responseText);
+      
+        if (!json || typeof json.location != 'string') {
+            reject('Invalid JSON: ' + xhr.responseText);
+            return;
+        }
+      
+        resolve(json.location);
+    };
+    
+    xhr.onerror = () => {
+      reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+    };
+    
+    const formData = new FormData();
+    formData.append('file', blobInfo.blob(), blobInfo.filename());
+    
+    xhr.send(formData);
+});
+</script>
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -377,14 +420,33 @@
                             tinymce.init({
                             selector: 'textarea',
                             plugins: 'tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-                            toolbar: 'undo redo | link image | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                            toolbar: 'undo redo  | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
                             tinycomments_mode: 'embedded',
-                            images_upload_url: 'postAcceptor.php',
-                            tinycomments_author: 'Author name',
-                            mergetags_list: [
-                                { value: 'First.Name', title: 'First Name' },
-                                { value: 'Email', title: 'Email' },
-                            ],
+                            content_style: 'img { max-width: 100%; height: auto; }',
+
+                            image_title: true,
+                            // without images_upload_url set, Upload tab won't show up
+                            images_upload_url: 'upload.php',
+                            
+                            // override default upload handler to simulate successful upload
+                            images_upload_handler: image_upload_handler_callback,
+                            setup: function (editor) {
+                                editor.on('init', function(args) {
+                                    editor = args.target;
+
+                                    editor.on('NodeChange', function(e) {
+                                    if (e && e.element.nodeName.toLowerCase() == 'img') {
+                                        width = e.element.width;
+                                        height = e.element.height;
+                                        if (width > 1000) {
+                                            height = height / (width / 1000);
+                                            width = 1000;
+                                        }
+                                    tinyMCE.DOM.setAttribs(e.element, {'width': width, 'height': height});
+                                    }
+                                    });
+                                });
+                            },
                             ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
                             });
                         </script>
