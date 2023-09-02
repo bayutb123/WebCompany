@@ -360,30 +360,38 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                    
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-                    <textarea>
-                        Welcome to TinyMCE!
-                      </textarea>
-                    <script>
-                        tinymce.init({
-                          selector: 'textarea',
-                          plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-                          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                          tinycomments_mode: 'embedded',
-                          tinycomments_author: 'Author name',
-                          mergetags_list: [
-                            { value: 'First.Name', title: 'First Name' },
-                            { value: 'Email', title: 'Email' },
-                          ],
-                          ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
-                        });
-                      </script>
-
+                    <h1 class="h3 mb-4 text-gray-800">Compose a blog</h1>
+                    <form action="{{ route('compose.perform') }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <input type="hidden" name="author" value="sampleauthor">
+                        <input type="text" class="form-control form-control-user mb-4"
+                                id="title" name="title" aria-describedby="title"
+                                placeholder="Blog title">
+                    
+                        <textarea id="content" name="content">
+                            Welcome to TinyMCE!
+                        </textarea>
+                        <script>
+                            tinymce.init({
+                            selector: 'textarea',
+                            plugins: 'tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+                            toolbar: 'undo redo | link image | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                            tinycomments_mode: 'embedded',
+                            images_upload_url: 'postAcceptor.php',
+                            tinycomments_author: 'Author name',
+                            mergetags_list: [
+                                { value: 'First.Name', title: 'First Name' },
+                                { value: 'Email', title: 'Email' },
+                            ],
+                            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+                            });
+                        </script>
+                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                    </form>
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
