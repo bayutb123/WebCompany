@@ -12,80 +12,76 @@
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
+<script src="https://cdn.tiny.cloud/1/nnd7pakaxqr7isf3oqefsdlew1jsidgl78umfeus6tg21ng0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
 <script>
-    const image_upload_handler_callback = (blobInfo, progress) => new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.withCredentials = false;
-    xhr.open('POST', 'upload.php');
-    
-    xhr.upload.onprogress = (e) => {
-        progress(e.loaded / e.total * 100);
-    };
-    
-    xhr.onload = () => {
-        if (xhr.status === 403) {
-            reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
-            return;
-        }
-      
-        if (xhr.status < 200 || xhr.status >= 300) {
-            reject('HTTP Error: ' + xhr.status);
-            return;
-        }
-      
-        const json = JSON.parse(xhr.responseText);
-      
-        if (!json || typeof json.location != 'string') {
-            reject('Invalid JSON: ' + xhr.responseText);
-            return;
-        }
-      
-        resolve(json.location);
-    };
-    
-    xhr.onerror = () => {
-      reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
-    };
-    
-    const formData = new FormData();
-    formData.append('file', blobInfo.blob(), blobInfo.filename());
-    
-    xhr.send(formData);
-});
-</script>
+        tinymce.init({
+            selector: 'textarea',
 
-<script>
-    tinymce.init({
-    selector: 'textarea',
-    plugins: 'tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-    toolbar: 'undo redo  | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-    tinycomments_mode: 'embedded',
-    content_style: 'img { max-width: 100%; height: auto; }',
+            image_class_list: [
+            {title: 'img-responsive', value: 'img-responsive'},
+            ],
+            height: 500,
+            setup: function (editor) {
+                editor.on('init change', function () {
+                    editor.save();
+                });
+            },
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste imagetools"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image ",
 
-    image_title: true,
-    // without images_upload_url set, Upload tab won't show up
-    images_upload_url: 'upload.php',
-    
-    // override default upload handler to simulate successful upload
-    images_upload_handler: image_upload_handler_callback,
-    setup: function (editor) {
-        editor.on('init', function(args) {
-            editor = args.target;
-
-            editor.on('NodeChange', function(e) {
-            if (e && e.element.nodeName.toLowerCase() == 'img') {
-                width = e.element.width;
-                height = e.element.height;
-                if (width > 800) {
-                    height = height / (width / 800);
-                    width = 800;
+            image_title: true,
+            automatic_uploads: true,
+            images_upload_url: '/upload',
+            images_upload_handler: function (blobInfo, success, failure) {
+            var xhr, formData;
+            xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', '{{ route('upload.perform') }}', true);
+            var token = document.getElementById("_token").value;
+            xhr.setRequestHeader("X-CSRF-Token", token);
+            xhr.onload = function() {
+                var json;
+                if (xhr.status != 200) {
+                    failure('HTTP Error: ' + xhr.status);
+                    return;
                 }
-            tinyMCE.DOM.setAttribs(e.element, {'width': width, 'height': height});
+                json = JSON.parse(xhr.responseText);
+
+                if (!json || typeof json.location != 'string') {
+                    failure('Invalid JSON: ' + xhr.responseText);
+                    return;
+                }
+                success(json.location);
+            };
+            formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+            xhr.send(formData);
+            },
+            file_picker_types: 'image',
+            file_picker_callback: function(cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.onchange = function() {
+                    var file = this.files[0];
+
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function () {
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+                        cb(blobInfo.blobUri(), { title: file.name });
+                    };
+                };
+                input.click();
             }
-            });
         });
-    },
-    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
-    });
 </script>

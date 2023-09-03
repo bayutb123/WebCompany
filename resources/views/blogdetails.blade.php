@@ -28,8 +28,8 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>Blog Details</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href="{{ route('home.page') }}">Home</a></li>
+            <li><a href="{{ route('blog.page') }}">Blog</a></li>
             <li>Blog Details</li>
           </ol>
         </div>
@@ -62,7 +62,10 @@
 
               <div class="content">
                 
+                
                 {!! $blog->content !!}
+                
+
 
               </div><!-- End post content -->
 

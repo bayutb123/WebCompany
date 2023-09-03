@@ -15,6 +15,16 @@ class ComposeController extends Controller
         return view('dashboard.compose')->with('user', $user);
     }
 
+    public function upload(Request $request){
+        $fileName=$request->file('file')->getClientOriginalName();
+        $path=$request->file('file')->storeAs('uploads', $fileName, 'public');
+        return response()->json(['location'=>"/storage/$path"]); 
+        
+        /*$imgpath = request()->file('file')->store('uploads', 'public'); 
+        return response()->json(['location' => "/storage/$imgpath"]);*/
+
+    }
+
     public function store(ComposeRequest $request)
     {
         $validated = $request->validated();

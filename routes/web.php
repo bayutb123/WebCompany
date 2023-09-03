@@ -24,6 +24,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     });
 
     Route::group(['middleware' => 'auth'], function() {
+        Route::post('/upload', 'ComposeController@upload')->name('upload.perform');
         Route::get('/logout', 'LogoutController@logout')->name('logout.perform');
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard.page');
         Route::get('/compose', 'ComposeController@index')->name('compose.page');

@@ -20,7 +20,8 @@ class BlogController extends Controller
     public function show($id)
     {
         $blog = Blog::find($id);
-        $blog->content = str_replace("uploads/", "/uploads/", $blog->content); // Fix image path
+        
+        $blog->content = str_replace("storage/", "/storage/", $blog->content); // Fix image path
 
         $authorid = $blog->author;
         $authorname = User::find($authorid)->name;
