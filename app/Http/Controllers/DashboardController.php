@@ -32,7 +32,7 @@ class DashboardController extends Controller
         $blog = Blog::find($id);
         $user = auth()->user();
         $allusers = User::all();
-        $blog->content = str_replace("uploads/", "/uploads/", $blog->content); // Fix image path
+        $blog->content = str_replace("uploads/", "/storage/uploads/", $blog->content); // Fix image path // Fix image path
         return view('dashboard.blogs')->with('user', $user)->with('blog', $blog)->with('allusers', $allusers);
     }
 
@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $blog->content = str_replace("../../uploads", "/uploads/", $blog->content); // Fix image path
         $user = auth()->user();
         $allusers = User::all();
-        $blog->content = str_replace("\"storage/uploads/", "/uploads/", $blog->content); // Fix image path
+        $blog->content = str_replace("\"storage/uploads/", "\"/storage/uploads/", $blog->content); // Fix image path
         return view('dashboard.edit-blog')->with('user', $user)->with('blog', $blog)->with('allusers', $allusers);
     }
 
