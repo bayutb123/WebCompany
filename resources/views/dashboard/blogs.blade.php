@@ -45,15 +45,28 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">All Blogs</h6>
                         </div>
+
+                        <div class="col-auto mx-2 mt-4">
+                            <label class="sr-only" for="searchForABlog">Search</label>
+                            <div class="input-group mb-2">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-search"></i></div>
+                              </div>
+                              <input type="text" class="form-control"  id="searchForABlog" onkeyup="searchForABlog()" placeholder="Search Title">
+                            </div>
+                          </div>
+                      
                         <div class="card-body">
+
                             <div class="table-responsive">
-                                    
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                                <table class="table table-bordered" id="blogs" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Title</th>
                                             <th>Author</th>
                                             <th>Date Created</th>
+                                            <th>Date Updated</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>    
@@ -62,15 +75,18 @@
                                             <th>Title</th>
                                             <th>Author</th>
                                             <th>Date Created</th>
+                                            <th>Date Updated</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         @foreach($blogs as $blog)
                                         <tr>
-                                            <td><a target="_blank" href="{{ route('blog.single', ['id' => $blog->id]) }}">{{ $blog->title }}</a></td>
+                                            <td><a target="_blank" href="{{ route('blog.single', ['id' => $blog->id]) }}">{{ $blog->title }}</a>
+                                            </td>
                                             <td>{{ $blog->author }}</td>
                                             <td>{{ $blog->created_at }}</td>
+                                            <td>{{ $blog->updated_at }}</td>
                                             <td align="center">
                                                 <a href="{{ route('blog.edit', ['id' => $blog->id]) }}" class="btn btn-info btn-icon-split">
                                                     <span class="icon text-white-50">
@@ -128,7 +144,6 @@
             </div>
         </div>
     </div>
-
     @include('dependencies-dashboard.script')
 </body>
 

@@ -21,7 +21,7 @@ class BlogController extends Controller
     {
         $blog = Blog::find($id);
         
-        $blog->content = str_replace("storage/", "/storage/", $blog->content); // Fix image path
+        $blog->content = str_replace("\"storage/", "/storage/", $blog->content); // Fix image path
 
         $authorid = $blog->author;
         $authorname = User::find($authorid)->name;

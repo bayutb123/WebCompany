@@ -1,7 +1,6 @@
 
 
 <!-- ======= DASHBOARD ======= -->
-<script src="https://cdn.tiny.cloud/1/3z6f2cyoslvin188e5u27mwns7ht2nvkdg8a839o9gwcwith/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <!-- Bootstrap core JavaScript-->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -11,9 +10,27 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-
 <script src="https://cdn.tiny.cloud/1/nnd7pakaxqr7isf3oqefsdlew1jsidgl78umfeus6tg21ng0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
+<script>
+    function searchForABlog() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("searchForABlog");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("blogs");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+    }
+</script>
 <script>
         tinymce.init({
             selector: 'textarea',

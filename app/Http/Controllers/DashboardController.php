@@ -39,9 +39,10 @@ class DashboardController extends Controller
     public function edit($id)
     {
         $blog = Blog::find($id);
+        $blog->content = str_replace("../../uploads", "/uploads/", $blog->content); // Fix image path
         $user = auth()->user();
         $allusers = User::all();
-        $blog->content = str_replace("uploads/", "/uploads/", $blog->content); // Fix image path
+        $blog->content = str_replace("\"storage/uploads/", "/uploads/", $blog->content); // Fix image path
         return view('dashboard.edit-blog')->with('user', $user)->with('blog', $blog)->with('allusers', $allusers);
     }
 

@@ -33,7 +33,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::post('/register', 'RegisterController@register')->name('register.perform');
         Route::get('/blogs', 'DashboardController@blogs')->name('blogs.page');
         Route::get('/blog/delete/{id}', 'DashboardController@delete')->name('blog.delete');
-        Route::get('/blog/edit/{id}', 'DashboardController@edit')->name('blog.edit');
-        Route::post('/blog/update/{id}', 'DashboardController@update')->name('blog.update');
+        Route::get('/edit/{id}', 'DashboardController@edit')->name('blog.edit');
+        Route::post('/update/{id}', 'DashboardController@update')->name('blog.update');
     });
 });
