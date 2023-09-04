@@ -35,8 +35,19 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Edit blog</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
-                                class="fa fa-edit fa-sm text-white-50"></i> Delete blog</a>
+                        <div class="dropdown mb-4">
+                            <button class="btn btn-danger dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                Delete Blog
+                            </button>
+                            <div class="dropdown-menu animated--fade-in"
+                                aria-labelledby="dropdownMenuButton">
+                                <h5 align="center" class="mt-2 bold">Are you sure?</h5>
+                                <br>
+                                <a class="dropdown-item bg-danger" href="{{route('blog.delete',['id' => $blog->id])}}">Delete</a>
+                            </div>
+                        </div>
                     </div>
                     <form action="{{ route('blog.update', ['id' => $blog->id]) }}" method="post" enctype="multipart/form-data">
                         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}" />
