@@ -12,7 +12,8 @@ class ComposeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('dashboard.compose')->with('user', $user);
+        $categories = ['WebCompany', 'News', 'Notices'];
+        return view('dashboard.compose')->with('user', $user)->with('categories', $categories);
     }
 
     public function upload(Request $request){
@@ -39,6 +40,7 @@ class ComposeController extends Controller
 
         $blog = new Blog();
         $blog->title = $validated['title'];
+        $blog->category = $validated['category'];
         $blog->author = $user->id;
         $blog->content = $validated['content'];
         $blog->image = $filename;

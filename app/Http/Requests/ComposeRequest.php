@@ -23,6 +23,7 @@ class ComposeRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'content' => 'required|string',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',

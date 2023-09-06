@@ -48,6 +48,12 @@
                                 id="title" name="title" aria-describedby="title"
                                 placeholder="Blog title">
 
+                        <select class="form-control form-control-user mb-4" id="category" name="category">
+                            <option value="" disabled selected>Choose a category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category }}">{{ $category }}</option>
+                            @endforeach
+
                        <input type="file" class="form-control form-control-user mb-4"
                                 id="image" name="image" aria-describedby="image"
                                 placeholder="Blog image">             
