@@ -14,7 +14,9 @@ class BlogController extends Controller
 
         $recentblogs = Blog::latest()->take(3)->orderBy('id', 'DESC')->get();
 
-        return view('blog')->with('blogs', $blogs)->with('recentblogs', $recentblogs);
+        $categories = Blog::select('category')->distinct()->get();  
+
+        return view('blog')->with('blogs', $blogs)->with('recentblogs', $recentblogs)->with('categories', $categories);
     }
 
     public function show($id)
@@ -29,6 +31,17 @@ class BlogController extends Controller
         $recentblogs = Blog::latest()->take(5)->orderBy('id', 'DESC')->get();
 
         return view('blogdetails')->with('blog', $blog)->with('authorname', $authorname)->with('recentblogs', $recentblogs);
+    }
+
+    public function category($category)
+    {
+        $blogs = Blog::where('category', $category)->orderBy('id', 'DESC')->paginate(10);
+
+        $recentblogs = Blog::latest()->take(3)->orderBy('id', 'DESC')->get();
+
+        $categories = Blog::select('category')->distinct()->get();  
+
+        return view('blog')->with('blogs', $blogs)->with('recentblogs', $recentblogs)->with('categories', $categories);
     }
 
 }

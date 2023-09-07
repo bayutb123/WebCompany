@@ -45,13 +45,15 @@
               @foreach ($blogs as $blog)
               <div class="col-lg-6">
                 <article class="d-flex flex-column">
-
+                  
                   <div class="post-img">
                     <img src="{{ asset('storage/blog-banner/'.$blog->image) }}" alt="" class="img-fluid">
+                    
                   </div>
-
+                  
                   <h2 class="title">
                     <a href="{{ route('blog.single', ['id' => $blog->id]) }}">{{ $blog->title }}</a>
+                    <span class="badge text-bg-primary my-2 mx-2">{{ $blog->category }}</span>
                   </h2>
 
                   <div class="meta-top">
@@ -60,6 +62,8 @@
                       <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2022-01-01">{{ $blog->created_at }}</time></a></li>
                     </ul>
                   </div>
+
+                  
 
                 </article>
               </div>
@@ -87,6 +91,18 @@
                   <button type="submit"><i class="bi bi-search"></i></button>
                 </form>
               </div><!-- End sidebar search formn-->
+
+              <div class="sidebar-item tags">
+                <h3 class="sidebar-title">Category</h3>
+                <ul class="mt-3">
+                  @foreach ($categories as $category)
+                  <li>
+                    <a href="{{ route('blog.category', ['category' => $category->category]) }}">{{ $category->category }}</a>
+                  </li>
+                  @endforeach
+                </ul>
+              </div><!-- End sidebar tags-->
+
 
               <div class="sidebar-item recent-posts">
                 <h3 class="sidebar-title">Recent Posts</h3>

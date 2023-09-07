@@ -18,6 +18,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/', 'HomeController@index')->name('home.page');
     Route::get('/blog', 'BlogController@index')->name('blog.page');
     Route::get('/blog/{id}', 'BlogController@show')->name('blog.single');
+    Route::get('/category/{category}', 'BlogController@category')->name('blog.category');
     Route::group(['middleware' => 'guest'], function() {
         Route::get('/login', 'LoginController@index')->name('login.page');
         Route::post('/login', 'LoginController@login')->name('login.perform');
