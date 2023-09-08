@@ -12,6 +12,25 @@
   @include('dependencies.link')
 </head>
 
+<style>
+  .max-lines {
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 3.6em;
+  line-height: 1.8em;
+}
+.blog-banner {
+  height: 100%;
+}
+
+.banner-container {
+  height: 200px;
+  align-content: center;
+  overflow: hidden;
+}
+</style>
+
 <body>
 
   <!-- ======= Header ======= -->
@@ -200,12 +219,14 @@
         @foreach($blogs as $blog)
         <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
           <div class="post-box">
-            <div class="post-img"><img src="{{ asset('/storage/blog-banner/'.$blog->image) }}" class="img-fluid" alt=""></div>
+            <div class="post-img banner-container">
+              <img src="{{ asset('/storage/blog-banner/'.$blog->image) }}" class="img-thumbnail" alt="">
+            </div>
             <div class="meta">
               <span class="post-date">{{ $blog->created_at }}</span>
               <span class="post-author"> / {{ $blog->author }}</span>
             </div>
-            <h3 class="post-title">{{$blog->title}}</h3>
+            <h3 class="post-title max-lines">{{$blog->title}}</h3>
             <a href="{{ route('blog.single', ['id' => $blog->id]) }}" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
           </div>
         </div>

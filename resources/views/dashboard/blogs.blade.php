@@ -14,7 +14,6 @@
     @include('dependencies-dashboard.link')
 
 </head>
-
 <body id="page-top">
 
     <!-- Page Wrapper -->

@@ -12,6 +12,27 @@
   @include('dependencies.link')
 </head>
 
+<style>
+  .max-lines {
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 3.6em;
+  line-height: 1.8em;
+}
+.blog-banner {
+  height: 100%;
+}
+
+.banner-container {
+  height: 200px;
+  align-content: center;
+  overflow: hidden;
+}
+.clear : hover {
+  background-color: red;
+}
+</style>
 <body>
 
   <!-- ======= Header ======= -->
@@ -46,9 +67,8 @@
               <div class="col-lg-6">
                 <article class="d-flex flex-column">
                   
-                  <div class="post-img">
-                    <img src="{{ asset('storage/blog-banner/'.$blog->image) }}" alt="" class="img-fluid">
-                    
+                  <div class="post-img banner-container">
+                    <img src="{{ asset('/storage/blog-banner/'.$blog->image) }}" class="img-thumbnail" alt="">
                   </div>
                   
                   <h2 class="title">
@@ -100,6 +120,9 @@
                     <a href="{{ route('blog.category', ['category' => $category->category]) }}">{{ $category->category }}</a>
                   </li>
                   @endforeach
+                  <li class="btn-bg-danger">
+                    <a href="{{ route('blog.page') }}">x</a>
+                  </li>
                 </ul>
               </div><!-- End sidebar tags-->
 
@@ -111,7 +134,7 @@
                   <div class="post-item">
                     <img src="{{ asset('storage/blog-banner/'.$recentblog->image) }}" alt="" class="flex-shrink-0">
                     <div>
-                      <h4><a href="{{ route('blog.single', ['id' => $recentblog->id]) }}">{{ $recentblog->title }}</a></h4>
+                      <h4 class="max-lines" ><a href="{{ route('blog.single', ['id' => $recentblog->id]) }}">{{ $recentblog->title }}</a></h4>
                       <time datetime="2020-01-01">{{ $recentblog->created_at }}</time>
                     </div>
                   </div><!-- End recent post item-->
