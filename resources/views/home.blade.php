@@ -200,7 +200,7 @@
         @foreach($blogs as $blog)
         <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
           <div class="post-box">
-            <div class="post-img"><img src="{{ asset('blog-banner/'.$blog->image) }}" class="img-fluid" alt=""></div>
+            <div class="post-img"><img src="{{ asset('/storage/blog-banner/'.$blog->image) }}" class="img-fluid" alt=""></div>
             <div class="meta">
               <span class="post-date">{{ $blog->created_at }}</span>
               <span class="post-author"> / {{ $blog->author }}</span>
