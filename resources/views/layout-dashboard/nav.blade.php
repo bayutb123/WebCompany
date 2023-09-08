@@ -6,6 +6,10 @@
         <i class="fa fa-bars"></i>
     </button>
 
+    <a href="{{ route('compose.page') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fa fa-edit fa-sm text-white-50"></i> Make Blog Post
+    </a>
+
     {{-- <!-- Topbar Search -->
     <form
         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
