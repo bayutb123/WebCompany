@@ -55,7 +55,7 @@
                         @endif
 
                         <select class="form-control form-control-user mb-4" id="category" name="category">
-                            <option value="" disabled selected>Choose a category</option>
+                            <option value="" disabled>Choose a category</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category }}">{{ $category }}</option>
                             @endforeach
