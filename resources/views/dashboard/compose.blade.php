@@ -43,10 +43,16 @@
                     <h1 class="h3 mb-4 text-gray-800">Compose a blog</h1>
                     <form action="{{ route('compose.perform') }}" method="post" enctype="multipart/form-data">
                         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}" />
-                        <input type="hidden" name="author" value="sampleauthor">
+                        <input type="hidden" name="author" value="{{ $user->name }}">
+
                         <input type="text" class="form-control form-control-user mb-4"
                                 id="title" name="title" aria-describedby="title"
                                 placeholder="Blog title">
+                        @if ($errors->has('title'))
+                            <div class="alert alert-danger">
+                                {{ $errors->first('title') }}
+                            </div>
+                        @endif
 
                         <select class="form-control form-control-user mb-4" id="category" name="category">
                             <option value="" disabled selected>Choose a category</option>

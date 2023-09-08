@@ -82,7 +82,7 @@
                                     <tbody>
                                         @foreach($blogs as $blog)
                                         <tr>
-                                            <td><a target="_blank" href="{{ route('blog.single', ['id' => $blog->id]) }}">{{ $blog->title }}</a>
+                                            <td><a target="_blank" href="{{ route('blog.single', ['id' => $blog->id]) }}">{{ $blog->title }}<span class="badge text-bg-primary my-2 mx-2">{{ $blog->category }}</span></a>
                                             </td>
                                             <td>{{ $blog->author }}</td>
                                             <td>{{ $blog->created_at }}</td>

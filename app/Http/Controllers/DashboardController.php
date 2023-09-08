@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\User;
 use App\Http\Requests\ComposeRequest;
+use App\Http\Requests\EditRequest;
 use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
@@ -22,7 +23,7 @@ class DashboardController extends Controller
 
     public function blogs()
     {
-        $blogs = Blog::all();
+        $blogs = Blog::orderBy('id', 'DESC')->get();
         $user = auth()->user();
         return view('dashboard.blogs')->with('user', $user)->with('blogs', $blogs);
     }
@@ -46,7 +47,7 @@ class DashboardController extends Controller
         return view('dashboard.edit-blog')->with('user', $user)->with('blog', $blog)->with('allusers', $allusers);
     }
 
-    public function update(ComposeRequest $request) 
+    public function update(EditRequest $request) 
     {
         $blog = Blog::find($request->id);
         $validated = $request->validated();
