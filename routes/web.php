@@ -38,6 +38,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::delete('/blog/delete/{id}', 'DashboardController@delete')->name('blog.delete');
         Route::get('/edit/{id}', 'DashboardController@edit')->name('blog.edit');
         Route::post('/update/{id}', 'DashboardController@update')->name('blog.update');
+
+        Route::get('/activity', 'LoggerController@index')->name('logger.page');
         Route::get('/logger/account', 'LoggerController@onEditAccount')->name('logger.onEditAccount');
         Route::get('/logger/register/{name}', 'LoggerController@onRegisterNewAccount')->name('logger.onRegister');
         Route::get('/logger/compose/{name}', 'LoggerController@onComposeBlog')->name('logger.onComposeBlog');

@@ -9,6 +9,14 @@ use App\Models\Activity;
 
 class LoggerController extends Controller
 {
+
+    public function index()
+    {
+        $user = auth()->user();
+        $logs = Activity::where('user_id', $user->id)->orderBy('id', 'DESC')->get();
+        return view('dashboard.logs')->with('user', $user)->with('logs', $logs);
+    }
+
     public function onDeleteBlog($name)
     {
         $user = auth()->user();
