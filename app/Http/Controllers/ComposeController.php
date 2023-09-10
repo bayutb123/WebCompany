@@ -7,7 +7,7 @@ use App\Http\Requests\ComposeRequest;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ActivityLogRequest;
-use App\Models\Activity;
+use App\Models\ActivityLog;
 
 class ComposeController extends Controller
 {
@@ -28,10 +28,9 @@ class ComposeController extends Controller
 
     }
 
-    public function store(ComposeRequest $request, ActivityLogRequest $logRequest)
+    public function store(ComposeRequest $request)
     {
         $validated = $request->validated();
-        $validatedLog = $logRequest->validated();
 
         $photo = $request->file('image');
         $filename = date('Y-m-d').$photo->getClientOriginalName();
@@ -49,14 +48,7 @@ class ComposeController extends Controller
         $blog->image = $filename;
         $blog->save();
 
-        $log = new Activity();
-        $log->user_id = $validatedLog['user_id'];
-        $log->log_type = $validatedLog['log_type'];
-        $log->log_message = $validatedLog['log_message'];
-        $log->log_ip = Request::ip();
-        $log->save();
-
-        return redirect()->route('dashboard.page');
+        return redirect()->route('logger.onComposeBlog', ['name' => $blog->title]);
     }
 
     

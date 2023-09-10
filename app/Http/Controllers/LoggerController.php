@@ -34,4 +34,43 @@ class LoggerController extends Controller
 
         return redirect()->route('blogs.page');
     }
+
+    public function onComposeBlog($name)
+    {
+        $user = auth()->user();
+        $log = new Activity();
+        $log->user_id = $user->id;
+        $log->log_type = 'Add Blog';
+        $log->log_message = 'Added a new blog with name: '.$name;
+        $log->log_ip = Request::ip();
+        $log->save();
+
+        return redirect()->route('dashboard.page');
+    }
+
+    public function onEditAccount()
+    {
+        $user = auth()->user();
+        $log = new Activity();
+        $log->user_id = $user->id;
+        $log->log_type = 'Edit Account';
+        $log->log_message = 'Edited account profile';
+        $log->log_ip = Request::ip();
+        $log->save();
+
+        return redirect()->route('account.page');
+    }
+
+    public function onRegisterNewAccount($name) 
+    {
+        $user = auth()->user();
+        $log = new Activity();
+        $log->user_id = $user->id;
+        $log->log_type = 'Register Account';
+        $log->log_message = 'Registered a new account with name: '.$name;
+        $log->log_ip = Request::ip();
+        $log->save();
+
+        return redirect()->route('dashboard.page');
+    }
 }
