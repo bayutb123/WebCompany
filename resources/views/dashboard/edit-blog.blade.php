@@ -45,13 +45,26 @@
                                 aria-labelledby="dropdownMenuButton">
                                 <h5 align="center" class="mt-2 bold">Are you sure?</h5>
                                 <br>
-                                <a class="dropdown-item bg-danger" href="{{route('blog.delete',['id' => $blog->id])}}">Delete</a>
+                                <form method="POST" onsubmit="streamDeleteValue()" action="{{route('blog.delete', ['id' => $blog->id])}} ">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    @method('DELETE')
+                                    {{-- Logging --}}
+                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                    <input type="hidden" name="log_type" value="Delete Blog">
+                                    <input type="hidden" id="delete_message" name="log_message" value="">
+                                    <button class="dropdown-item bg-danger" type="submit">Delete</a>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <form action="{{ route('blog.update', ['id' => $blog->id]) }}" method="post" enctype="multipart/form-data">
+                    <form onsubmit="streamValue()" action="{{ route('blog.update', ['id' => $blog->id]) }}" method="post" enctype="multipart/form-data">
                         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}" />
-                        <input type="hidden" name="author" value="sampleauthor">
+                        {{-- Logging --}}
+                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+                        <input type="hidden" name="log_type" value="Edit Blog">
+                        <input type="hidden" id="message" name="log_message" value="">
+                        
+                        <input type="hidden" name="author" value="{{ $user->id }}">
                         <input type="text" class="form-control form-control-user mb-4"
                                 id="title" name="title" aria-describedby="title"
                                 placeholder="Blog title" value="{{$blog->title}}">
@@ -115,6 +128,30 @@
     </div>
 
     @include('dependencies-dashboard.script')
+    <script>
+        function streamValue() {
+          // Get the source and target input elements by their IDs
+          var sourceInput = document.getElementById('title');
+          var targetInput = document.getElementById('message');
+      
+          // Get the value from the source input
+          var sourceValue = sourceInput.value;
+      
+          // Set the value of the target input to be the same as the source value
+          targetInput.value = "User edited blog with title: " + sourceValue;
+        }
+        function streamDeleteValue() {
+          // Get the source and target input elements by their IDs
+          var sourceInput = document.getElementById('title');
+          var targetInput = document.getElementById('delete_message');
+      
+          // Get the value from the source input
+          var sourceValue = sourceInput.value;
+      
+          // Set the value of the target input to be the same as the source value
+          targetInput.value = "title: " + sourceValue;
+        }
+      </script>
 </body>
 
 </html>
