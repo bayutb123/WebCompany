@@ -43,9 +43,11 @@
                     <h1 class="h3 mb-4 text-gray-800">Compose a blog</h1>
                     <form action="{{ route('compose.perform') }}" method="post" enctype="multipart/form-data">
                         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}" />
+                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+                        <input type="hidden" name="log_type" value="Blog Post">
+                        <input type="hidden" id="message" name="log_message" value="">
                         <input type="hidden" name="author" value="{{ $user->name }}">
-
-                        <input type="text" class="form-control form-control-user mb-4"
+                        <input type="text" onkeyup="streamValue()" class="form-control form-control-user mb-4"
                                 id="title" name="title" aria-describedby="title"
                                 placeholder="Blog title">
                         @if ($errors->has('title'))
@@ -117,6 +119,20 @@
 
     
   @include('dependencies-dashboard.script')
+
+  <script>
+    function streamValue() {
+      // Get the source and target input elements by their IDs
+      var sourceInput = document.getElementById('title');
+      var targetInput = document.getElementById('message');
+  
+      // Get the value from the source input
+      var sourceValue = sourceInput.value;
+  
+      // Set the value of the target input to be the same as the source value
+      targetInput.value = sourceValue;
+    }
+  </script>
 
 </body>
 

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 use App\Models\Blog;
 use App\Models\User;
 use App\Http\Requests\ComposeRequest;
 use App\Http\Requests\EditRequest;
+use App\Http\Requests\ActivityLogRequest;
+use App\Models\Activity;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\DeleteBlogRequest;
 
 class DashboardController extends Controller
 {
@@ -60,14 +63,19 @@ class DashboardController extends Controller
             Storage::disk('public')->put($path, file_get_contents($photo));
             $blog->image = $filename;
         }
-        $blog->save();
-        return redirect()->route('blogs.page');
+        $blog->update();
+
+        $name = $blog->title;
+        return redirect()->route('logger.onEditBlog', ['name' => $name]);
     }
 
-    public function delete($id)
+    public function delete($id, ActivityLogRequest $logRequest)
     {
         $blog = Blog::find($id);
+        $name = $blog->title;
         $blog->delete();
-        return redirect()->route('blogs.page');
+
+        $logData = $logRequest->validated();
+        return redirect()->route('logger.onDeleteBlog', ['name' => $name]);
     }
 }

@@ -35,8 +35,7 @@ class AccountsController extends Controller
 
         $user->save();
 
-        return redirect()->route('account.page')->with('response', 'Account Updated Successfully');
-
+        return redirect()->route('logger.onEditAccount');
     }
     
 }

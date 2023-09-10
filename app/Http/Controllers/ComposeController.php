@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 use App\Http\Requests\ComposeRequest;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ActivityLogRequest;
+use App\Models\ActivityLog;
 
 class ComposeController extends Controller
 {
@@ -46,7 +48,9 @@ class ComposeController extends Controller
         $blog->image = $filename;
         $blog->save();
 
-        return redirect()->route('dashboard.page');
+        return redirect()->route('logger.onComposeBlog', ['name' => $blog->title]);
     }
+
+    
 
 }
